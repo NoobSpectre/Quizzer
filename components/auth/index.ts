@@ -1,4 +1,3 @@
-import { FormSection } from './FormSection';
-import { LeftSection } from './LeftSection';
+import { AuthLayoutSection } from './AuthLayoutSection';
 
-export { FormSection, LeftSection };
+export { AuthLayoutSection };

@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  [type='text'],
+  [type='password'] {
+    @apply w-full border-slate-300 border-0 border-b-2 shadow-sm focus:ring-0 focus:outline-none;
+  }
+}

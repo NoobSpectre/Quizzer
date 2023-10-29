@@ -1,4 +1,4 @@
-import { LeftSection } from '@/components/auth';
+import { AuthLayoutSection } from '@/components/auth';
 import { Paper } from '@mantine/core';
 import { ReactNode } from 'react';
 
@@ -7,12 +7,13 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
     <div className="h-screen flex justify-center items-center overflow-hidden bg-slate-700 px-6">
       <Paper
         shadow="lg"
-        className="h-[48rem] sm:h-[38rem] w-[56rem] overflow-hidden"
+        className="relative h-[48rem] sm:h-[38rem] w-[56rem] overflow-hidden"
+        style={{ backgroundColor: '#fff' }}
       >
-        <main className="h-full bg-amber-300">
-          <LeftSection />
+        <AuthLayoutSection />
 
-          <section>{children}</section>
+        <main className="h-full flex flex-row-reverse -z-10">
+          {children}
         </main>
       </Paper>
     </div>

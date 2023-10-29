@@ -1,6 +1,5 @@
 'use client';
 
-import logo from '@/public/logo.svg';
 import {
   Anchor,
   Box,
@@ -94,7 +93,7 @@ export const Header = () => {
         <Group justify="space-between" h="100%">
           <div className="flex justify-center items-center xl:ml-10">
             <Image
-              src={logo}
+              src='/logo.svg'
               alt="logo"
               width={45}
               height={45}

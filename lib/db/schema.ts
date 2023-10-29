@@ -4,6 +4,7 @@ import {
   date,
   index,
   int,
+  mysqlEnum,
   mysqlTable,
   primaryKey,
   serial,
@@ -18,9 +19,7 @@ export const accounts = mysqlTable(
   'accounts',
   {
     id: serial('id').primaryKey(),
-    userId: varchar('userId', { length: 256 })
-      .notNull()
-      .references(() => users.id),
+    userId: varchar('userId', { length: 256 }).notNull(),
     type: varchar('type', { length: 256 })
       .$type<AdapterAccount['type']>()
       .notNull(),
@@ -79,25 +78,36 @@ export const verificationTokens = mysqlTable(
     expires: timestamp('expires', { mode: 'date' }).notNull(),
   },
   t => ({
-    compoundKey: primaryKey(t.identifier, t.token),
+    identifier_token_id: primaryKey(t.identifier, t.token), // compound key
     tokenIndex: uniqueIndex('verification_tokens__token__idx').on(t.token),
   })
 );
 
-const genderEnum: [string, string, string] = ['male', 'female', 'unpreferred'];
+const genderEnum: [string, string, string] = [
+  'male',
+  'female',
+  'prefer hidden',
+];
 
-export const users = mysqlTable('users', {
-  id: serial('id').primaryKey(),
-  fullname: varchar('fullname', { length: 30 }).notNull(),
-  email: varchar('email', { length: 20 }).unique().notNull(),
-  birthday: date('birthday'),
-  gender: varchar('gender', { length: 12, enum: genderEnum }),
-  image: text('image'),
-  createdAt: timestamp('created_at', { mode: 'date', fsp: 0 }).defaultNow(),
-  updatedAt: timestamp('updated_at', { mode: 'date', fsp: 0 })
-    .defaultNow()
-    .onUpdateNow(),
-});
+export const users = mysqlTable(
+  'users',
+  {
+    id: serial('id').primaryKey(),
+    name: varchar('name', { length: 30 }).notNull(),
+    email: varchar('email', { length: 20 }).unique().notNull(),
+    password: varchar('password', { length: 256 }).notNull(),
+    birthday: date('birthday'),
+    gender: mysqlEnum('gender', genderEnum),
+    image: text('image'),
+    created_at: timestamp('created_at', { mode: 'date', fsp: 0 }).defaultNow(),
+    updated_at: timestamp('updated_at', { mode: 'date', fsp: 0 })
+      .defaultNow()
+      .onUpdateNow(),
+  },
+  t => ({
+    emailIndex: uniqueIndex('users__email__idx').on(t.email),
+  })
+);
 
 export const userRelations = relations(users, ({ one, many }) => ({
   // 1 user <-> 1 account
@@ -126,7 +136,7 @@ export const addressRelations = relations(addresses, ({ one }) => ({
   user: one(users, { fields: [addresses.userId], references: [users.id] }),
 }));
 
-const questionStatus: [string, string] = ['right', 'wrong'];
+const questionStatus: [string, string, string] = ['right', 'wrong', 'unsolved'];
 // const questionAnswer: [number, number, number, number, number] = [
 //   1, 2, 3, 4, 5,
 // ];
@@ -137,7 +147,7 @@ export const questions = mysqlTable(
     id: serial('id').primaryKey(),
     category: varchar('category', { length: 15 }).notNull(),
     description: text('description'),
-    status: varchar('status', { length: 5, enum: questionStatus }),
+    status: mysqlEnum('status', questionStatus).default('unsolved'),
     answer: tinyint('answer'),
     userId: int('userId'),
   },
