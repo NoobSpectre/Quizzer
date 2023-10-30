@@ -8,13 +8,11 @@ import {
   mysqlTable,
   primaryKey,
   serial,
-  smallint,
   text,
   timestamp,
   tinyint,
   uniqueIndex,
   varchar,
-  year,
 } from 'drizzle-orm/mysql-core';
 
 export const accounts = mysqlTable(
@@ -99,6 +97,7 @@ export const users = mysqlTable(
     email: varchar('email', { length: 20 }).unique().notNull(),
     password: varchar('password', { length: 256 }).notNull(),
     birthday: date('birthday'),
+    phone: varchar('phone', { length: 10 }),
     gender: mysqlEnum('gender', genderEnum),
     image: text('image'),
     created_at: timestamp('created_at', { mode: 'date', fsp: 0 }).defaultNow(),
