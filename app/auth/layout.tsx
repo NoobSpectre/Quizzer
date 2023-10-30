@@ -12,7 +12,7 @@ const AuthLayout = ({ children }: { children: ReactNode }) => {
       >
         <AuthLayoutSection />
 
-        <main className="h-full flex flex-row-reverse -z-10">
+        <main className="h-full grid sm:grid-cols-2 -z-10">
           {children}
         </main>
       </Paper>

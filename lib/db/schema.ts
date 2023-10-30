@@ -8,11 +8,13 @@ import {
   mysqlTable,
   primaryKey,
   serial,
+  smallint,
   text,
   timestamp,
   tinyint,
   uniqueIndex,
   varchar,
+  year,
 } from 'drizzle-orm/mysql-core';
 
 export const accounts = mysqlTable(
@@ -83,7 +85,7 @@ export const verificationTokens = mysqlTable(
   })
 );
 
-const genderEnum: [string, string, string] = [
+export const genderEnum: [string, string, string] = [
   'male',
   'female',
   'prefer hidden',
@@ -136,7 +138,11 @@ export const addressRelations = relations(addresses, ({ one }) => ({
   user: one(users, { fields: [addresses.userId], references: [users.id] }),
 }));
 
-const questionStatus: [string, string, string] = ['right', 'wrong', 'unsolved'];
+export const questionStatus: [string, string, string] = [
+  'right',
+  'wrong',
+  'unsolved',
+];
 // const questionAnswer: [number, number, number, number, number] = [
 //   1, 2, 3, 4, 5,
 // ];

@@ -5,16 +5,7 @@ import Image from 'next/image';
 
 export const CompanyButton = ({ company }: { company: string }) => {
   return (
-    <Button
-      radius="xl"
-      variant="filled"
-      color="#dfe6f0"
-      size="lg"
-      style={{
-        boxShadow:
-          '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
-      }}
-    >
+    <Button variant="filled" color="#dfe6f0" className='@container'>
       <Image
         src={`/${company.toLocaleLowerCase()}Icon.svg`}
         alt="Google icon"
@@ -22,7 +13,7 @@ export const CompanyButton = ({ company }: { company: string }) => {
         width={25}
         className="object-contain"
       />
-      <span className="text-slate-700 text-lg font-medium">{company}</span>
+      <span className="hidden @[5.8rem]:block text-slate-700 text-lg font-medium">{company}</span>
     </Button>
   );
 };

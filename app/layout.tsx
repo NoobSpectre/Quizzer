@@ -1,4 +1,4 @@
-import { Header } from '@/components/header';
+import { Header } from '@/components/headers';
 import { ColorSchemeScript } from '@mantine/core';
 import { Metadata } from 'next';
 import { Poppins } from 'next/font/google';

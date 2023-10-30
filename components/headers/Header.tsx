@@ -20,11 +20,12 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { useSession } from 'next-auth/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { TbChevronDown } from 'react-icons/tb';
-import classes from './header.module.css';
+import classes from './navbar.module.css';
 
 const mockdata = [
   {
@@ -61,6 +62,7 @@ const mockdata = [
 
 export const Header = () => {
   const pathname = usePathname();
+  const { data: session } = useSession();
   const [drawerOpened, { toggle: toggleDrawer, close: closeDrawer }] =
     useDisclosure(false);
   const [linksOpened, { toggle: toggleLinks }] = useDisclosure(false);
@@ -91,16 +93,20 @@ export const Header = () => {
     <Box className={pathname.includes('/auth') ? 'hidden' : ''}>
       <header className="h-16 border-b-2 px-1 md:px-6">
         <Group justify="space-between" h="100%">
-          <div className="flex justify-center items-center xl:ml-10">
+          <Box
+            component={Link}
+            href="/"
+            className="flex justify-center items-center xl:ml-10"
+          >
             <Image
-              src='/logo.svg'
+              src="/logo.svg"
               alt="logo"
               width={45}
               height={45}
               className="object-contain"
             />
             <h1 className="text-4xl font-bold">Quizzer</h1>
-          </div>
+          </Box>
 
           <nav>
             <Group h="100%" gap={0} visibleFrom="sm">
@@ -115,7 +121,7 @@ export const Header = () => {
                 withinPortal
               >
                 <HoverCard.Target>
-                  <a href="#" className={classes.link}>
+                  <Link href="#" className={classes.link}>
                     <Center inline>
                       <Box component="span" mr={5}>
                         Features
@@ -125,7 +131,7 @@ export const Header = () => {
                         color={theme.colors.blue[6]}
                       />
                     </Center>
-                  </a>
+                  </Link>
                 </HoverCard.Target>
 
                 <HoverCard.Dropdown style={{ overflow: 'hidden' }}>
