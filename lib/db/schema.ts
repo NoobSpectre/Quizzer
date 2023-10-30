@@ -143,9 +143,6 @@ export const questionStatus: [string, string, string] = [
   'wrong',
   'unsolved',
 ];
-// const questionAnswer: [number, number, number, number, number] = [
-//   1, 2, 3, 4, 5,
-// ];
 
 export const questions = mysqlTable(
   'questions',
