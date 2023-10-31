@@ -22,9 +22,14 @@ export const NotFound = () => {
             component={Link}
             href="/"
             size="md"
-            style={{
-              background: 'linear-gradient(to right, #E50000, #210080)',
-              border: 0,
+            className="hover:shadow-2xl"
+            variant="gradient"
+            gradient={{ from: '#E50000', to: '#210080', deg: 90 }}
+            styles={{
+              root: {
+                boxShadow:
+                  '0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
+              },
             }}
           >
             Go back to home page
