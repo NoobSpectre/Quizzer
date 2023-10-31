@@ -18,7 +18,7 @@ export const CompanyButton = ({
       className="@container"
     >
       <Image
-        src={`/${company.toLocaleLowerCase()}Icon.svg`}
+        src={`/${company.toLowerCase()}Icon.svg`}
         alt="Google icon"
         height={25}
         width={25}
