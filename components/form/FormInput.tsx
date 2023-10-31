@@ -52,7 +52,7 @@ export const FormInput = ({
         {...register}
       />
       {error && (
-        <p className="absolute text-[0.6rem] @3xs:text-xs text-red-600">
+        <p className="absolute text-[0.6rem] @3xs:text-xs text-red-600 ml-[1px]">
           {error}
         </p>
       )}
