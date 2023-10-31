@@ -3,11 +3,12 @@
 import { FormInput } from '@/components/form';
 import { FormNavigation } from '@/components/form/FormNavigation';
 import { FormHeader } from '@/components/headers';
-import { CompanyButton, FormButton } from '@/components/ui';
+import { CompanyButton, FormButton, HomeButton } from '@/components/ui';
 import { userSignUpSchema } from '@/lib/models/schema';
 import { UserSignUpSchema } from '@/lib/models/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Divider } from '@mantine/core';
+import Link from 'next/link';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -35,7 +36,7 @@ const Signup = () => {
             className="flex flex-col w-full gap-5 mt-1"
           >
             {/* user details */}
-            <div className="w-full my-auto flex flex-col gap-6">
+            <div className="w-full my-auto flex flex-col gap-7">
               <FormInput
                 type="text"
                 label="Name"
@@ -95,10 +96,14 @@ const Signup = () => {
           />
         </div>
 
+        {/* auth provider buttons */}
         <div className="w-full grid grid-flow-col justify-stretch px-3 py-1 gap-x-5">
           <CompanyButton company="Google" disabled={isSubmitting} />
           <CompanyButton company="Github" disabled={isSubmitting} />
         </div>
+
+        {/* go back home container */}
+        <HomeButton />
       </div>
     </div>
   );
