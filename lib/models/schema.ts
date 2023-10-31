@@ -30,8 +30,9 @@ export const userSignUpSchema = z
 
 export const userSignInSchema = z.object({
   email: z
-    .string({ required_error: 'Field cannot be empty' })
-    .email('Invalid email')
-    .trim(),
-  password: z.string({ required_error: 'Field cannot be empty' }).trim(),
+    .string()
+    .trim()
+    .min(1, 'Email cannot be empty.')
+    .email('Invalid email'),
+  password: z.string().trim().min(1, 'Password cannot be empty.'),
 });

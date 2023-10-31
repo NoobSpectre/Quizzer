@@ -43,7 +43,7 @@ export const FormInput = ({
   return (
     <div className="@container relative">
       <input
-        className="peer pl-0.5 pr-[2.8rem] focus:border-indigo-700 placeholder-transparent text-slate-800"
+        className="peer pl-[1px] pr-[2.8rem] focus:border-indigo-700 placeholder-transparent text-slate-800"
         placeholder={props.placeholder ? props.placeholder : ''}
         autoComplete="off"
         id={id}
@@ -52,13 +52,13 @@ export const FormInput = ({
         {...register}
       />
       {error && (
-        <p className="absolute text-[0.6rem] @3xs:text-xs text-red-600 ml-[1px]">
+        <p className="absolute text-[0.6rem] @[15.5rem]:text-xs text-red-600 ml-[2px]">
           {error}
         </p>
       )}
       <label
         htmlFor={id}
-        className="absolute left-0 -top-3 ml-[1px] text-xs font-medium text-slate-800 peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-focus:-top-3 peer-focus:text-xs peer-focus:text-slate-800 cursor-text transition-all"
+        className="absolute left-0 -top-3 ml-[2px] text-xs font-medium text-slate-800 peer-placeholder-shown:top-2 peer-placeholder-shown:text-xl peer-placeholder-shown:text-slate-400 peer-focus:-top-3 peer-focus:text-xs peer-focus:text-slate-800 cursor-text transition-all"
       >
         {label}
       </label>
