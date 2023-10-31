@@ -3,9 +3,20 @@
 import { Button } from '@mantine/core';
 import Image from 'next/image';
 
-export const CompanyButton = ({ company }: { company: string }) => {
+export const CompanyButton = ({
+  company,
+  disabled,
+}: {
+  company: string;
+  disabled?: boolean;
+}) => {
   return (
-    <Button variant="filled" color="#dfe6f0" className='@container'>
+    <Button
+      disabled={disabled}
+      variant="filled"
+      color="#dfe6f0"
+      className="@container"
+    >
       <Image
         src={`/${company.toLocaleLowerCase()}Icon.svg`}
         alt="Google icon"
@@ -13,7 +24,9 @@ export const CompanyButton = ({ company }: { company: string }) => {
         width={25}
         className="object-contain"
       />
-      <span className="hidden @[5.8rem]:block text-slate-700 text-lg font-medium">{company}</span>
+      <span className="hidden @[5.8rem]:block text-slate-700 text-lg font-medium">
+        {company}
+      </span>
     </Button>
   );
 };

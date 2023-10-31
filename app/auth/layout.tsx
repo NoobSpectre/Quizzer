@@ -4,17 +4,18 @@ import { ReactNode } from 'react';
 
 const AuthLayout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="h-screen flex justify-center items-center overflow-hidden bg-slate-700 px-6">
+    <div
+      className="@container h-full flex justify-center items-center overflow-hidden bg-slate-700
+    "
+    >
       <Paper
         shadow="lg"
-        className="relative h-[48rem] sm:h-[38rem] w-[56rem] overflow-hidden"
+        className="relative h-[38rem] w-[56rem] overflow-hidden mx-4 @2xs:mx-6"
         style={{ backgroundColor: '#fff' }}
       >
         <AuthLayoutSection />
 
-        <main className="h-full grid sm:grid-cols-2 -z-10">
-          {children}
-        </main>
+        <main className="h-full grid sm:grid-cols-2 -z-10">{children}</main>
       </Paper>
     </div>
   );

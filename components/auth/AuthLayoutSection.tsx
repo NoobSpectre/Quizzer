@@ -17,7 +17,7 @@ export const AuthLayoutSection = () => {
       }}
       animate={{
         translateY: isMobileScreen ? '-100%' : 0,
-        width: isMobileScreen ? '100%' : '48%',
+        width: isMobileScreen ? '100%' : '50%',
         transition: {
           type: 'tween',
           width: { duration: 1 },

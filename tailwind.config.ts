@@ -7,7 +7,12 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      containers: {
+        '2xs': '17.5rem',
+        '3xs': '16.88rem',
+      },
+    },
   },
   plugins: [
     require('@tailwindcss/forms'),

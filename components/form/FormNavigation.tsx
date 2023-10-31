@@ -3,7 +3,7 @@
 import { cn } from '@/lib/utils';
 import Link from 'next/link';
 
-type TformNavigarionProps = {
+type FormNavigationProps = {
   to?: string;
   linkText?: string;
   linkLabel?: string;
@@ -17,7 +17,7 @@ export const FormNavigation = ({
   linkLabel,
   className,
   forgotPassword,
-}: TformNavigarionProps) => {
+}: FormNavigationProps) => {
   return (
     // other page links container
     <div
@@ -33,7 +33,7 @@ export const FormNavigation = ({
         </span>
         <Link
           href={to ? to : '/'}
-          className="font-medium italic hover:underline hover:underline-offset-2"
+          className="font-medium italic hover:underline hover:underline-offset-2 text-red-600"
         >
           {linkText ? `${linkText}` : 'linktext'}
         </Link>
@@ -43,7 +43,7 @@ export const FormNavigation = ({
       {forgotPassword ? (
         <Link
           href="/auth/forgot-password"
-          className="italic hover:underline hover:underline-offset-2"
+          className="italic hover:underline hover:underline-offset-2 text-indigo-700"
         >
           Forgot password?
         </Link>

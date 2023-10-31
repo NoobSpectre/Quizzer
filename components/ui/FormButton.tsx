@@ -3,9 +3,18 @@
 import { Button } from '@mantine/core';
 import { ReactNode } from 'react';
 
-export const FormButton = ({ children }: { children: ReactNode }) => {
+export const FormButton = ({
+  loading,
+  children,
+}: {
+  loading?: boolean;
+  children: ReactNode;
+}) => {
   return (
     <Button
+      type="submit"
+      loading={loading}
+      loaderProps={{ type: 'dots' }}
       variant="gradient"
       size="md"
       gradient={{ from: '#E50000', to: '#210080', deg: 90 }}

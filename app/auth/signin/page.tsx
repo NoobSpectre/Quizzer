@@ -6,9 +6,18 @@ import { FormHeader } from '@/components/headers';
 import { CompanyButton, FormButton } from '@/components/ui';
 import { Divider } from '@mantine/core';
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 const Signin = () => {
   const [show, setShow] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    getValues,
+    formState: { errors, isSubmitting },
+  } = useForm();
 
   return (
     <div className="sm:col-start-2">
@@ -25,13 +34,13 @@ const Signin = () => {
                 type="text"
                 label="Email"
                 id="email"
-                categoryRight="email"
+                rightCategory="email"
               />
               <FormInput
                 type={show ? 'text' : 'password'}
                 label="Password"
                 id="password"
-                categoryRight="password"
+                rightCategory="password"
                 onRightBtnClick={() => setShow(prev => !prev)}
               />
             </div>
@@ -42,11 +51,11 @@ const Signin = () => {
               linkText="sign up"
               linkLabel="New Quizzer?"
               forgotPassword="include"
-              className="text-[0.6rem] @[16.88rem]:text-xs"
+              className="text-[0.6rem] @3xs:text-xs"
             />
 
             {/* submit btn container */}
-            <div className="w-full flex justify-center pt-2">
+            <div className="w-full flex justify-center">
               <FormButton>Sign in</FormButton>
             </div>
           </form>

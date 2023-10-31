@@ -1,30 +1,36 @@
 'use client';
 
+import { ComponentProps } from 'react';
+import { UseFormRegisterReturn } from 'react-hook-form';
 import {
   MdOutlineMail,
+  MdOutlinePerson,
   MdOutlineVisibility,
   MdOutlineVisibilityOff,
 } from 'react-icons/md';
 
-type TformType = 'text' | 'password';
-
-type TformInputProps = {
-  type: TformType;
+type FormInputProps = {
   label: string;
   id: string;
-  placeholder?: string;
-  categoryRight?: string;
+  type: 'text' | 'password';
+  rightCategory?: string;
   onRightBtnClick?: () => void;
-};
+  register?: UseFormRegisterReturn;
+  error?: string;
+} & ComponentProps<'input'>;
 
 export const FormInput = ({
-  type,
   label,
   id,
-  categoryRight,
+  type,
+  rightCategory,
   onRightBtnClick,
-}: TformInputProps) => {
+  register,
+  error,
+  ...props
+}: FormInputProps) => {
   const rightSection = {
+    name: <MdOutlinePerson color="#334155" />,
     email: <MdOutlineMail color="#334155" />,
     password:
       type === 'password' ? (
@@ -35,25 +41,33 @@ export const FormInput = ({
   };
 
   return (
-    <div className="relative">
+    <div className="@container relative">
       <input
+        className="peer pl-0.5 pr-[2.8rem] focus:border-indigo-700 placeholder-transparent text-slate-800"
+        placeholder={props.placeholder ? props.placeholder : ''}
+        autoComplete="off"
         id={id}
         type={type}
-        placeholder=""
-        className="peer pl-0.5 pr-[2.8rem] focus:border-red-600 placeholder-transparent"
+        {...props}
+        {...register}
       />
+      {error && (
+        <p className="absolute text-[0.6rem] @3xs:text-xs text-red-600">
+          {error}
+        </p>
+      )}
       <label
         htmlFor={id}
         className="absolute left-0 -top-3 ml-[1px] text-xs font-medium text-slate-800 peer-placeholder-shown:top-2 peer-placeholder-shown:text-base peer-placeholder-shown:text-slate-400 peer-focus:-top-3 peer-focus:text-xs peer-focus:text-slate-800 cursor-text transition-all"
       >
         {label}
       </label>
-      {categoryRight && (
+      {rightCategory && (
         <div
           className="absolute h-full aspect-square right-0 -top-0.5 flex justify-center items-center hover:bg-slate-50 hover:cursor-pointer"
           onClick={() => (onRightBtnClick ? onRightBtnClick() : null)}
         >
-          {rightSection[categoryRight as keyof typeof rightSection]}
+          {rightSection[rightCategory as keyof typeof rightSection]}
         </div>
       )}
     </div>
