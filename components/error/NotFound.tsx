@@ -18,7 +18,15 @@ export const NotFound = () => {
           Oops! Page Not Found
         </Title>
         <Group justify="center">
-          <Button component={Link} href="/" size="md">
+          <Button
+            component={Link}
+            href="/"
+            size="md"
+            style={{
+              background: 'linear-gradient(to right, #E50000, #210080)',
+              border: 0,
+            }}
+          >
             Go back to home page
           </Button>
         </Group>
