@@ -26,7 +26,7 @@ export const accounts = mysqlTable(
     provider: varchar('provider', { length: 256 }).notNull(),
     providerAccountId: varchar('providerAccountId', { length: 256 }).notNull(),
     access_token: varchar('access_token', { length: 256 }),
-    expires_in: int('expires_in'),
+    expires_at: int('expires_in'),
     id_token: varchar('id_token', { length: 256 }),
     refresh_token: varchar('refresh_token', { length: 256 }),
     refresh_token_expires_in: int('refresh_token_expires_in'),
