@@ -1,3 +1,4 @@
 import { FormInput } from './FormInput';
+import { FormNavigation } from './FormNavigation';
 
-export { FormInput };
+export { FormInput, FormNavigation };

@@ -16,30 +16,24 @@ import {
 } from 'drizzle-orm/mysql-core';
 
 export const accounts = mysqlTable(
-  'accounts',
+  'account',
   {
-    id: serial('id').primaryKey(),
     userId: varchar('userId', { length: 256 }).notNull(),
     type: varchar('type', { length: 256 })
       .$type<AdapterAccount['type']>()
       .notNull(),
     provider: varchar('provider', { length: 256 }).notNull(),
     providerAccountId: varchar('providerAccountId', { length: 256 }).notNull(),
-    access_token: varchar('access_token', { length: 256 }),
-    expires_at: int('expires_in'),
-    id_token: varchar('id_token', { length: 256 }),
-    refresh_token: varchar('refresh_token', { length: 256 }),
-    refresh_token_expires_in: int('refresh_token_expires_in'),
-    scope: varchar('scope', { length: 256 }),
     token_type: varchar('token_type', { length: 256 }),
+    access_token: varchar('access_token', { length: 256 }),
+    refresh_token: varchar('refresh_token', { length: 256 }),
+    expires_at: int('expires_at'),
+    id_token: text('id_token'),
+    scope: varchar('scope', { length: 256 }),
     session_state: varchar('session_state', { length: 256 }),
   },
   t => ({
-    providerAccountIdIndex: uniqueIndex('accounts_providerAccountId_idx').on(
-      t.provider,
-      t.providerAccountId
-    ),
-    userIdIndex: index('accounts_userId_idx').on(t.userId),
+    compoundKey: primaryKey(t.provider, t.providerAccountId),
   })
 );
 
@@ -48,38 +42,28 @@ export const accountRelations = relations(accounts, ({ one }) => ({
   user: one(users, { fields: [accounts.userId], references: [users.id] }),
 }));
 
-export const sessions = mysqlTable(
-  'sessions',
-  {
-    id: serial('id').primaryKey(),
-    sessionToken: varchar('sessionToken', { length: 256 }),
-    userId: varchar('userId', { length: 256 }).notNull(),
-    expires: timestamp('expires', { mode: 'date' }).notNull(),
-  },
-  t => ({
-    sessionTokenIndex: uniqueIndex('sessions_sessionToken_idx').on(
-      t.sessionToken
-    ),
-    userIdIndex: index('sessions_userId_idx').on(t.userId),
-  })
-);
+// session table
+export const sessions = mysqlTable('session', {
+  sessionToken: varchar('sessionToken', { length: 256 }).primaryKey(),
+  userId: varchar('userId', { length: 256 }).notNull(),
+  expires: timestamp('expires', { mode: 'date' }).notNull(),
+});
 
+// session relations
 export const sessionRelations = relations(sessions, ({ one }) => ({
   // 1 session <-> 1 user
   user: one(users, { fields: [sessions.userId], references: [users.id] }),
 }));
 
 export const verificationTokens = mysqlTable(
-  'verificationTokens',
+  'verificationToken',
   {
-    id: serial('id'),
-    identifier: varchar('identifier', { length: 255 }).notNull(),
-    token: varchar('token', { length: 255 }).notNull(),
+    identifier: varchar('identifier', { length: 256 }).notNull(),
+    token: varchar('token', { length: 256 }).notNull(),
     expires: timestamp('expires', { mode: 'date' }).notNull(),
   },
   t => ({
-    identifier_token_id: primaryKey(t.identifier, t.token), // compound key
-    tokenIndex: uniqueIndex('verification_tokens__token__idx').on(t.token),
+    compoundKey: primaryKey(t.identifier, t.token),
   })
 );
 
@@ -90,23 +74,27 @@ export const genderEnum: [string, string, string] = [
 ];
 
 export const users = mysqlTable(
-  'users',
+  'user',
   {
-    id: serial('id').primaryKey(),
+    id: varchar('id', { length: 256 }).notNull(),
+    uid: serial('uid').primaryKey(),
     name: varchar('name', { length: 30 }).notNull(),
-    email: varchar('email', { length: 20 }).unique().notNull(),
-    password: varchar('password', { length: 256 }).notNull(),
+    email: varchar('email', { length: 256 }).unique().notNull(),
+    password: varchar('password', { length: 256 }),
+    emailVerified: timestamp('emailVerified', {
+      mode: 'date',
+      fsp: 3,
+    }).defaultNow(),
     birthday: date('birthday'),
     phone: varchar('phone', { length: 10 }),
     gender: mysqlEnum('gender', genderEnum),
     image: text('image'),
     created_at: timestamp('created_at', { mode: 'date', fsp: 0 }).defaultNow(),
-    updated_at: timestamp('updated_at', { mode: 'date', fsp: 0 })
-      .defaultNow()
-      .onUpdateNow(),
+    updated_at: timestamp('updated_at', { mode: 'date', fsp: 0 }).onUpdateNow(),
   },
   t => ({
-    emailIndex: uniqueIndex('users__email__idx').on(t.email),
+    // uid: uniqueIndex('uid').on(t.uid),
+    email_idx: uniqueIndex('user_email_idx').on(t.email),
   })
 );
 
@@ -124,7 +112,7 @@ export const userRelations = relations(users, ({ one, many }) => ({
   questions: many(questions),
 }));
 
-export const addresses = mysqlTable('addresses', {
+export const addresses = mysqlTable('address', {
   id: serial('id').primaryKey(),
   country: varchar('country', { length: 10 }),
   state: varchar('state', { length: 15 }),
@@ -134,7 +122,7 @@ export const addresses = mysqlTable('addresses', {
 
 export const addressRelations = relations(addresses, ({ one }) => ({
   // 1 address <-> 1 user
-  user: one(users, { fields: [addresses.userId], references: [users.id] }),
+  user: one(users, { fields: [addresses.userId], references: [users.uid] }),
 }));
 
 export const questionStatus: [string, string, string] = [
@@ -144,7 +132,7 @@ export const questionStatus: [string, string, string] = [
 ];
 
 export const questions = mysqlTable(
-  'questions',
+  'question',
   {
     id: serial('id').primaryKey(),
     category: varchar('category', { length: 15 }).notNull(),
@@ -161,7 +149,7 @@ export const questions = mysqlTable(
 
 export const questionRelations = relations(questions, ({ one }) => ({
   // n question <-> 1 user
-  user: one(users, { fields: [questions.userId], references: [users.id] }),
+  user: one(users, { fields: [questions.userId], references: [users.uid] }),
 
   // 1 question <-> 1 questionOptions(1 row)
   questionOptions: one(questionOptions, {

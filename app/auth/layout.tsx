@@ -1,8 +1,17 @@
 import { AuthLayoutSection } from '@/components/auth';
+import { authOptions } from '@/lib/auth/authOptions';
 import { Paper } from '@mantine/core';
+import { getServerSession } from 'next-auth';
+import { redirect } from 'next/navigation';
 import { ReactNode } from 'react';
 
-const AuthLayout = ({ children }: { children: ReactNode }) => {
+const AuthLayout = async ({ children }: { children: ReactNode }) => {
+  const session = await getServerSession(authOptions);
+
+  if (session) {
+    redirect('/');
+  }
+
   return (
     <div
       className="@container h-full flex justify-center items-center overflow-hidden bg-slate-700

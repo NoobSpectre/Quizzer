@@ -1,4 +1,7 @@
 import { ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { submitForm } from './submitForm';
 
-export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
+const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
+
+export { cn, submitForm };

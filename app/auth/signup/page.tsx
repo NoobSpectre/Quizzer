@@ -1,14 +1,14 @@
 'use client';
 
-import { FormInput } from '@/components/form';
-import { FormNavigation } from '@/components/form/FormNavigation';
+import { FormInput, FormNavigation } from '@/components/form';
 import { FormHeader } from '@/components/headers';
 import { CompanyButton, FormButton, HomeButton } from '@/components/ui';
 import { userSignUpSchema } from '@/lib/models/schema';
 import { UserSignUpSchema } from '@/lib/models/types';
+import { submitForm } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Divider } from '@mantine/core';
-import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -18,7 +18,7 @@ const Signup = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting,  },
+    formState: { errors, isSubmitting },
   } = useForm<UserSignUpSchema>({
     resolver: zodResolver(userSignUpSchema),
   });
@@ -32,7 +32,10 @@ const Signup = () => {
         <div className="max-h-96 w-full px-3 flex flex-col items-center">
           {/* signin form */}
           <form
-            onSubmit={handleSubmit(data => console.log({ data, errors }))}
+            onSubmit={handleSubmit(async (data: UserSignUpSchema) => {
+              const { success, user } = await submitForm(data, 'signup');
+              if (success) signIn('credentials', { ...user });
+            })}
             className="flex flex-col w-full gap-5 mt-1"
           >
             {/* user details */}
@@ -81,12 +84,11 @@ const Signup = () => {
             />
 
             {/* submit btn container */}
-            <div className="w-full flex justify-center">
-              <FormButton loading={isSubmitting}>Sign up</FormButton>
-            </div>
+            <FormButton loading={isSubmitting}>Sign up</FormButton>
           </form>
         </div>
 
+        {/* divider submit btn and auth btns */}
         <div className="w-full px-3">
           <Divider
             my="xs"

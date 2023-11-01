@@ -3,8 +3,13 @@
 import { FormInput } from '@/components/form';
 import { FormNavigation } from '@/components/form/FormNavigation';
 import { FormHeader } from '@/components/headers';
-import { CompanyButton, FormButton } from '@/components/ui';
+import { CompanyButton, FormButton, HomeButton } from '@/components/ui';
+import { userSignInSchema } from '@/lib/models/schema';
+import { UserSignInSchema } from '@/lib/models/types';
+import { submitForm } from '@/lib/utils';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { Divider } from '@mantine/core';
+import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -14,10 +19,10 @@ const Signin = () => {
   const {
     register,
     handleSubmit,
-    reset,
-    getValues,
     formState: { errors, isSubmitting },
-  } = useForm();
+  } = useForm<UserSignInSchema>({
+    resolver: zodResolver(userSignInSchema),
+  });
 
   return (
     <div className="sm:col-start-2">
@@ -27,7 +32,13 @@ const Signin = () => {
         {/* signin form container */}
         <div className="max-h-96 w-full px-3 py-1 flex flex-col items-center">
           {/* signin form */}
-          <form className="flex flex-col w-full gap-5 mt-4">
+          <form
+            onSubmit={handleSubmit(async data => {
+              const { success, user } = await submitForm(data, 'signin');
+              if (success) signIn('credentials', { ...user });
+            })}
+            className="flex flex-col w-full gap-7 mt-4"
+          >
             {/* user details */}
             <div className="w-full my-auto flex flex-col gap-8">
               <FormInput
@@ -35,6 +46,8 @@ const Signin = () => {
                 label="Email"
                 id="email"
                 rightCategory="email"
+                register={register('email')}
+                error={errors?.email?.message}
               />
               <FormInput
                 type={show ? 'text' : 'password'}
@@ -42,6 +55,8 @@ const Signin = () => {
                 id="password"
                 rightCategory="password"
                 onRightBtnClick={() => setShow(prev => !prev)}
+                register={register('password')}
+                error={errors?.password?.message}
               />
             </div>
 
@@ -55,12 +70,11 @@ const Signin = () => {
             />
 
             {/* submit btn container */}
-            <div className="w-full flex justify-center">
-              <FormButton>Sign in</FormButton>
-            </div>
+            <FormButton loading={isSubmitting}>Sign in</FormButton>
           </form>
         </div>
 
+        {/* divider submit btn and auth btns */}
         <div className="w-full px-3">
           <Divider
             my="xs"
@@ -70,10 +84,14 @@ const Signin = () => {
           />
         </div>
 
+        {/* auth provider buttons */}
         <div className="w-full grid grid-flow-col justify-stretch px-3 py-1 gap-x-5">
-          <CompanyButton company="Google" />
-          <CompanyButton company="Github" />
+          <CompanyButton company="Google" disabled={isSubmitting} />
+          <CompanyButton company="Github" disabled={isSubmitting} />
         </div>
+
+        {/* go back home container */}
+        <HomeButton />
       </div>
     </div>
   );
