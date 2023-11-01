@@ -48,7 +48,7 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    jwt: async ({ token,  }) => {
+    jwt: async ({ token }) => {
       const db_user = await preparedFindUserByEmail.execute({
         email: token.email,
       });

@@ -7,6 +7,7 @@ import { UserSignInSchema, UserSignUpSchema } from '@/lib/models/types';
 import bcrypt from 'bcrypt';
 import { v4 as uuid } from 'uuid';
 
+// signup action
 export const signupAction = async (data: UserSignUpSchema) => {
   const parsedData = userSignUpSchema.safeParse(data);
 
@@ -48,6 +49,7 @@ export const signupAction = async (data: UserSignUpSchema) => {
   }
 };
 
+// signin action
 export const signinAction = async (data: UserSignInSchema) => {
   const parsedData = userSignInSchema.safeParse(data);
 
