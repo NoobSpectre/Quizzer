@@ -3,8 +3,8 @@ import { ColorSchemeScript } from '@mantine/core';
 import { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
+import Providers from '../providers';
 import './globals.css';
-import Providers from './providers/providers';
 
 const poppins = Poppins({ weight: '400', subsets: ['latin'] });
 
@@ -25,8 +25,8 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body className={poppins.className}>
+        <Toaster />
         <Providers>
-          <Toaster />
           <Header />
           {children}
         </Providers>
