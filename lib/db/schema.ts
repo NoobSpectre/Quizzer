@@ -89,8 +89,12 @@ export const users = mysqlTable(
     phone: varchar('phone', { length: 10 }),
     gender: mysqlEnum('gender', genderEnum),
     image: text('image'),
-    created_at: timestamp('created_at', { mode: 'date', fsp: 0 }).defaultNow(),
-    updated_at: timestamp('updated_at', { mode: 'date', fsp: 0 }).onUpdateNow(),
+    created_at: timestamp('created_at', { mode: 'date', fsp: 0 })
+      .notNull()
+      .defaultNow(),
+    updated_at: timestamp('updated_at', { mode: 'date', fsp: 0 })
+      .notNull()
+      .onUpdateNow(),
   },
   t => ({
     // uid: uniqueIndex('uid').on(t.uid),

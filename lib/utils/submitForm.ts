@@ -39,6 +39,5 @@ export const submitForm = async (
     return { success: false };
   }
 
-  toast.success(response.message);
   return { success: true, user: response.user };
 };

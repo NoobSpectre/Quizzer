@@ -163,12 +163,9 @@ export const Header = () => {
                   </div>
                 </HoverCard.Dropdown>
               </HoverCard>
-              <a href="#" className={classes.link}>
-                Learn
-              </a>
-              <a href="#" className={classes.link}>
-                Academy
-              </a>
+              <Link href="/profile/1" className={classes.link}>
+                Profile
+              </Link>
             </Group>
           </nav>
 

@@ -55,6 +55,7 @@ export const authOptions: NextAuthOptions = {
 
       if (db_user) {
         token.id = db_user.id;
+        token.isNew = db_user.created_at < new Date();
       }
 
       return token;
@@ -62,6 +63,7 @@ export const authOptions: NextAuthOptions = {
     session: async ({ session, token }) => {
       if (token) {
         session.user.id = token.id;
+        session.user.isNew = token.isNew;
       }
 
       return session;
