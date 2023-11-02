@@ -2,7 +2,6 @@
 
 import { MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
-
 import { SessionProvider } from 'next-auth/react';
 
 const Providers = ({ children }: { children: React.ReactNode }) => {
