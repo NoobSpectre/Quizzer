@@ -16,25 +16,18 @@ const ErrorPage = ({ error, reset }: ErrorPageProps) => {
         <h1>Something went wrong!</h1>
         <div className="w-full flex justify-stretch gap-5">
           <Button
-            // size="md"
-            style={{
-              background: 'linear-gradient(to right, #E50000, #210080)',
-              border: 0,
-            }}
+            size="sm"
+            className="bg-gradient-to-r from-gradient-red to-gradient-blue"
             onClick={reset}
           >
             Try again
           </Button>
           <Button
-            // component={Link}
-            // href="/"
-            // size="md"
-            style={{
-              background: 'linear-gradient(to right, #E50000, #210080)',
-              border: 0,
-            }}
+            size="sm"
+            className="bg-gradient-to-r from-gradient-red to-gradient-blue"
+            asChild
           >
-            Go back to home page
+            <Link href="/">Go back to home page</Link>
           </Button>
         </div>
       </body>
