@@ -4,6 +4,7 @@ import { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import GitHubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
+import { cookies } from 'next/headers';
 import { db, preparedFindUserByEmail } from '../db';
 
 export const authOptions: NextAuthOptions = {
@@ -26,6 +27,7 @@ export const authOptions: NextAuthOptions = {
       name: 'credentials',
       credentials: { email: {}, password: {} },
       authorize: async credentials => {
+        console.log('executed!');
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
@@ -43,6 +45,8 @@ export const authOptions: NextAuthOptions = {
 
         if (!passwordMatch) return null;
 
+        cookies().set('loggedIn', 'true');
+
         return user;
       },
     }),
@@ -55,7 +59,6 @@ export const authOptions: NextAuthOptions = {
 
       if (db_user) {
         token.id = db_user.id;
-        token.isNew = db_user.created_at < new Date();
       }
 
       return token;
@@ -63,7 +66,6 @@ export const authOptions: NextAuthOptions = {
     session: async ({ session, token }) => {
       if (token) {
         session.user.id = token.id;
-        session.user.isNew = token.isNew;
       }
 
       return session;

@@ -1,13 +1,16 @@
 'use client';
 
-import { FormInput, FormNavigation } from '@/components/form';
+import {
+  CompanyButton,
+  FormButton,
+  HomeButton,
+} from '@/components/customButtons';
+import { FormInput, FormNavigation, FormSeparator } from '@/components/form';
 import { FormHeader } from '@/components/headers';
-import { CompanyButton, FormButton, HomeButton } from '@/components/ui';
 import { userSignUpSchema } from '@/lib/models/schema';
 import { UserSignUpSchema } from '@/lib/models/types';
 import { submitForm } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Divider } from '@mantine/core';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -90,12 +93,7 @@ const Signup = () => {
 
         {/* divider submit btn and auth btns */}
         <div className="w-full px-3">
-          <Divider
-            my="xs"
-            label="or sign up with"
-            orientation="horizontal"
-            color="#64748b"
-          />
+          <FormSeparator label="or sign in with" />
         </div>
 
         {/* auth provider buttons */}

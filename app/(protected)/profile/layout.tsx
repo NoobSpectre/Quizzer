@@ -1,4 +1,4 @@
-import { SignOutButton } from '@/components/ui';
+import { SignOutButton } from '@/components/customButtons';
 import { ReactNode } from 'react';
 
 const Profile = async ({ children }: { children: ReactNode }) => {

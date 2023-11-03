@@ -1,31 +1,21 @@
 'use client';
 
 import logo from '@/public/logo.svg';
-import { useMediaQuery } from '@mantine/hooks';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
 export const AuthLayoutSection = () => {
-  const isMobileScreen = useMediaQuery('(max-width: 639.5px)');
-
   return (
-    // whole left section heving red bg
     <motion.section
-      initial={{
-        height: '100%',
-        width: '100%',
-      }}
+      initial={{ translateY: '0%', width: '100%' }}
       animate={{
-        translateY: isMobileScreen ? '-100%' : 0,
-        width: isMobileScreen ? '100%' : '50%',
-        transition: {
-          type: 'tween',
-          width: { duration: 1 },
-          translateY: { duration: 1 },
-          delay: 0.2,
-        },
+        translateY: 'var(--y-to, 0%)',
+        width: 'var(--width-to, 100%)',
       }}
-      className="absolute flex justify-center items-center bg-red-600 rounded-r z-10"
+      transition={{ duration: 1, delay: 0.2 }}
+      className="absolute flex justify-center items-center bg-red-600 sm:rounded-r z-10 h-full
+        max-sm:[--y-to:-100%] sm:[--width-to:49%]
+      "
     >
       {/* image and text container */}
       <div className="flex flex-col w-[380px] scale-75">

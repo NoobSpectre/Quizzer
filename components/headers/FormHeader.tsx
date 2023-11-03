@@ -1,7 +1,6 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { useMediaQuery } from '@mantine/hooks';
 
 type FormHeaderProps = {
   formType: 'signup' | 'signin';
@@ -9,19 +8,17 @@ type FormHeaderProps = {
 };
 
 export const FormHeader = ({ formType, wrapperStyles }: FormHeaderProps) => {
-  const media = useMediaQuery('(max-width: 299.5px)');
-
   return (
     <div className={cn('text-center', wrapperStyles)}>
       <h2
-        className={cn('text-xl font-semibold text-black', { 'text-lg': media })}
+        className={cn('max-[299.5px]:text-lg text-xl font-semibold text-black')}
       >
         {formType === 'signin' ? 'Welcome back ' : 'Welcome '}
         <div
-          className={cn('italic text-3xl inline-block', { 'text-xl': media })}
+          className={cn('max-[299.5px]:text-xl italic text-3xl inline-block')}
         >
           Quizzer&nbsp;
-          <span className={cn('not-italic text-3xl', { 'text-xl': media })}>
+          <span className={cn('max-[299.5px]:text-xl not-italic text-3xl')}>
             !
           </span>
         </div>

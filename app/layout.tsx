@@ -1,5 +1,4 @@
 import { Header } from '@/components/headers';
-import { ColorSchemeScript } from '@mantine/core';
 import { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import { Toaster } from 'react-hot-toast';
@@ -21,9 +20,6 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
-        <ColorSchemeScript />
-      </head>
       <body className={poppins.className}>
         <Toaster />
         <Providers>

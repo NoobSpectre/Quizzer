@@ -1,14 +1,17 @@
 'use client';
 
-import { FormInput } from '@/components/form';
+import {
+  CompanyButton,
+  FormButton,
+  HomeButton,
+} from '@/components/customButtons';
+import { FormInput, FormSeparator } from '@/components/form';
 import { FormNavigation } from '@/components/form/FormNavigation';
 import { FormHeader } from '@/components/headers';
-import { CompanyButton, FormButton, HomeButton } from '@/components/ui';
 import { userSignInSchema } from '@/lib/models/schema';
 import { UserSignInSchema } from '@/lib/models/types';
 import { submitForm } from '@/lib/utils';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Divider } from '@mantine/core';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -74,14 +77,9 @@ const Signin = () => {
           </form>
         </div>
 
-        {/* divider submit btn and auth btns */}
+        {/* sepatator btn submit btn and auth btns */}
         <div className="w-full px-3">
-          <Divider
-            my="xs"
-            label="or sign in with"
-            orientation="horizontal"
-            color="#64748b"
-          />
+          <FormSeparator label="or sign in with" />
         </div>
 
         {/* auth provider buttons */}

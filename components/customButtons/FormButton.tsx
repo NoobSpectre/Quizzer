@@ -1,7 +1,7 @@
 'use client';
 
-import { Button } from '@mantine/core';
 import { ReactNode } from 'react';
+import { Button } from '../ui';
 
 export const FormButton = ({
   loading,
@@ -9,10 +9,12 @@ export const FormButton = ({
 }: {
   loading?: boolean;
   children: ReactNode;
-}) => {
+  }) => {
+  // toast a promise when loading is true
+  
   return (
     <div className="w-full flex justify-center">
-      <Button
+      {/* <Button
         type="submit"
         loading={loading}
         loaderProps={{ type: 'dots' }}
@@ -27,6 +29,9 @@ export const FormButton = ({
             'drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1))',
         }}
       >
+        {children}
+      </Button> */}
+      <Button type='submit' disabled={loading} className=''>
         {children}
       </Button>
     </div>

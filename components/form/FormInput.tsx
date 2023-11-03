@@ -43,7 +43,7 @@ export const FormInput = ({
   return (
     <div className="@container relative">
       <input
-        className="peer pl-[1px] pr-[2.8rem] focus:border-indigo-700 placeholder-transparent text-slate-800"
+        className="peer w-full pl-[1px] pr-[2.8rem] focus:border-indigo-700 placeholder-transparent text-slate-800"
         placeholder={props.placeholder ? props.placeholder : ''}
         autoComplete="off"
         id={id}

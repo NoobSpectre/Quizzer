@@ -38,7 +38,7 @@ export const signupAction = async (data: UserSignUpSchema) => {
 
     return {
       success: true,
-      user: { email, password },
+      user: { email, password, name },
       message: `Welcome ${name} 🎉`,
     };
   } catch (error) {

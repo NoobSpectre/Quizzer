@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@mantine/core';
+import { Button } from '@/components/ui';
 import Link from 'next/link';
 
 type ErrorPageProps = {
@@ -16,7 +16,7 @@ const ErrorPage = ({ error, reset }: ErrorPageProps) => {
         <h1>Something went wrong!</h1>
         <div className="w-full flex justify-stretch gap-5">
           <Button
-            size="md"
+            // size="md"
             style={{
               background: 'linear-gradient(to right, #E50000, #210080)',
               border: 0,
@@ -26,9 +26,9 @@ const ErrorPage = ({ error, reset }: ErrorPageProps) => {
             Try again
           </Button>
           <Button
-            component={Link}
-            href="/"
-            size="md"
+            // component={Link}
+            // href="/"
+            // size="md"
             style={{
               background: 'linear-gradient(to right, #E50000, #210080)',
               border: 0,

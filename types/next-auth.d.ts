@@ -8,7 +8,6 @@ declare module 'next-auth' {
       email: string;
       password: string;
       image: string;
-      isNew: boolean;
     };
   }
 }
@@ -17,6 +16,7 @@ declare module 'next-auth/jwt' {
   interface JWT {
     id: string;
     email: string;
-    isNew: boolean;
+    created_at: Date;
+    name: string;
   }
 }
