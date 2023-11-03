@@ -27,7 +27,6 @@ export const authOptions: NextAuthOptions = {
       name: 'credentials',
       credentials: { email: {}, password: {} },
       authorize: async credentials => {
-        console.log('executed!');
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
@@ -44,8 +43,6 @@ export const authOptions: NextAuthOptions = {
         );
 
         if (!passwordMatch) return null;
-
-        cookies().set('loggedIn', 'true');
 
         return user;
       },

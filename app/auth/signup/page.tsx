@@ -17,6 +17,7 @@ import { useForm } from 'react-hook-form';
 
 const Signup = () => {
   const [show, setShow] = useState(false);
+  const [disabled, setDisabled] = useState(false);
 
   const {
     register,
@@ -87,7 +88,9 @@ const Signup = () => {
             />
 
             {/* submit btn container */}
-            <FormButton loading={isSubmitting}>Sign up</FormButton>
+            <FormButton loading={isSubmitting} disabled={disabled}>
+              Sign up
+            </FormButton>
           </form>
         </div>
 
@@ -98,8 +101,16 @@ const Signup = () => {
 
         {/* auth provider buttons */}
         <div className="w-full grid grid-flow-col justify-stretch px-3 py-1 gap-x-5">
-          <CompanyButton company="Google" disabled={isSubmitting} />
-          <CompanyButton company="Github" disabled={isSubmitting} />
+          <CompanyButton
+            company="Google"
+            disabled={isSubmitting}
+            setDisabled={setDisabled}
+          />
+          <CompanyButton
+            company="Github"
+            disabled={isSubmitting}
+            setDisabled={setDisabled}
+          />
         </div>
 
         {/* go back home container */}

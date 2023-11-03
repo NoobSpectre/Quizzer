@@ -1,13 +1,8 @@
 'use client';
 
+import { Eye, EyeOff, Mail, User } from 'lucide-react';
 import { ComponentProps } from 'react';
 import { UseFormRegisterReturn } from 'react-hook-form';
-import {
-  MdOutlineMail,
-  MdOutlinePerson,
-  MdOutlineVisibility,
-  MdOutlineVisibilityOff,
-} from 'react-icons/md';
 
 type FormInputProps = {
   label: string;
@@ -30,13 +25,13 @@ export const FormInput = ({
   ...props
 }: FormInputProps) => {
   const rightSection = {
-    name: <MdOutlinePerson color="#334155" />,
-    email: <MdOutlineMail color="#334155" />,
+    name: <User color="#334155" />,
+    email: <Mail color="#334155" />,
     password:
       type === 'password' ? (
-        <MdOutlineVisibility color="#334155" />
+        <Eye color="#334155" />
       ) : (
-        <MdOutlineVisibilityOff color="#334155" />
+        <EyeOff color="#334155" />
       ),
   };
 
