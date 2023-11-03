@@ -93,7 +93,7 @@ const Signup = () => {
 
         {/* divider submit btn and auth btns */}
         <div className="w-full px-3">
-          <FormSeparator label="or sign in with" />
+          <FormSeparator label="or sign up with" />
         </div>
 
         {/* auth provider buttons */}
