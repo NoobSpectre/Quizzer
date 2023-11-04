@@ -1,5 +1,5 @@
 import { cn } from '@/lib/utils';
-import { Home, Info, Sword, Swords } from 'lucide-react';
+import { Home, Info, MessageSquarePlus, Sword, Swords } from 'lucide-react';
 import Link from 'next/link';
 
 type SidebarLinkProps = {
@@ -22,6 +22,7 @@ export const SidebarLink = ({
     about: <Info className="absolute h-4 w-4 top-[1.2px]" />,
     single: <Sword className="absolute h-4 w-4 top-[1.2px]" />,
     multiplayer: <Swords className="absolute h-4 w-4 top-[1.2px]" />,
+    feedback: <MessageSquarePlus className="absolute h-4 w-4 top-[1.2px]" />,
   };
 
   return (

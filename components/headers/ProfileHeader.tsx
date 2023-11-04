@@ -17,7 +17,7 @@ export const ProfileHeader = ({
 }: ProfileHeaderProps) => {
   return (
     <div className="flex flex-row w-full items-center py-2">
-      <Avatar>
+      <Avatar className='h-14 w-14'>
         <AvatarImage src={image} />
         <AvatarFallback>
           <User2 />

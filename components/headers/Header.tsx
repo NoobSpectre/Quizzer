@@ -85,10 +85,11 @@ export const Header = () => {
             onclick={closesheetAndModes}
           />
 
-          {/* Modes Dropdown Menu */}
+          {/* Modes Dropdown Menu container */}
           <div
             className={cn('flex flex-col text-primary text-sm rounded gap-2')}
           >
+            {/* Modes Dropdown Menu */}
             <div
               className="group flex gap-3 hover:bg-secondary py-2 pl-3 cursor-pointer select-none"
               onClick={() => setModesOpen(prev => !prev)}
@@ -106,23 +107,30 @@ export const Header = () => {
                 <span className="flex items-center">
                   <ChevronRight
                     className={cn(
-                      `h-3.5 w-3.5 ${modesOpen ? 'rotate-90' : 'rotate-0'}`
+                      `h-3.5 w-3.5 ${
+                        modesOpen ? 'rotate-90' : 'rotate-0'
+                      } transition-transform`
                     )}
                   />
                 </span>
               </div>
             </div>
+
+            {/* Modes Navlinks container */}
             <div
               className={cn(
                 `flex-col ml-7 gap-2 ${modesOpen ? 'flex' : 'hidden'}`
               )}
             >
+              {/* Single mode Navlink */}
               <SidebarLink
                 link="/single"
                 label="Single"
                 currentPath={pathname === '/single'}
                 onclick={handleSheetClose}
               />
+
+              {/* Multiplayer mode Navlink */}
               <SidebarLink
                 link="/multiplayer"
                 label="Multiplayer"
@@ -131,6 +139,14 @@ export const Header = () => {
               />
             </div>
           </div>
+
+          {/* Feedback Navlink */}
+          <SidebarLink
+            link="/feedback"
+            label="Feedback"
+            currentPath={pathname === '/feedback'}
+            onclick={closesheetAndModes}
+          />
         </SheetContent>
       </Sheet>
     </header>
