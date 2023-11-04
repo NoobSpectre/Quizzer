@@ -1,99 +1,138 @@
 'use client';
 
-import Image from 'next/image';
+import { cn } from '@/lib/utils';
+import { ChevronRight, LayoutList, Menu } from 'lucide-react';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useState } from 'react';
+import { Sheet, SheetContent, SheetTrigger } from '../ui';
+import { HeaderTitle } from './HeaderTitle';
+import { Navbar } from './Navbar';
+import { ProfileHeader } from './ProfileHeader';
+import { SidebarLink } from './SidebarLink';
 
 export const Header = () => {
   const pathname = usePathname();
+  const { data: session } = useSession();
+
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [modesOpen, setModesOpen] = useState(
+    pathname === '/single' || pathname === '/multiplayer'
+  );
+
+  const handleSheetClose = () => setSheetOpen(false);
+  const closesheetAndModes = () => {
+    setSheetOpen(false);
+    setModesOpen(false);
+  };
 
   return (
-    <div className={pathname.includes('/auth') ? 'hidden' : ''}>
-      <header className="h-16 border-b-2 px-1 md:px-6">
-        <div className="flex justify-between h-full">
-          <Link href="/" className="flex justify-center items-center xl:ml-10">
-            <Image
-              src="/logo.svg"
-              alt="logo"
-              width={45}
-              height={45}
-              className="object-contain"
-            />
-            <h1 className="text-4xl font-bold">Quizzer</h1>
-          </Link>
+    <header
+      className={cn('py-2 border-b-2 px-4 bg-amber-300 flex justify-between', {
+        hidden: pathname.includes('/auth'),
+      })}
+    >
+      <HeaderTitle />
+      <Navbar />
 
-          <nav>
-            <div className="hidden h-full sm:flex">
-              <Link href="/">Home</Link>
-              <Link href="/profile/1">Profile</Link>
-            </div>
-          </nav>
-
-          <div className="hidden sm:flex">
-            <Link href="/auth/signin">Sign in</Link>
-            <Link href="/auth/signup">Sign up</Link>
-          </div>
-
-          {/* <Burger
-            opened={drawerOpened}
-            onClick={toggleDrawer}
-            hiddenFrom="sm"
-          /> */}
+      <div className="hidden sm:flex items-center gap-4">
+        <div className="">
+          <Link href="/auth/signin">Sign in</Link>
         </div>
-      </header>
+        <div className="">
+          <Link href="/auth/signup">Sign up</Link>
+        </div>
+      </div>
 
-      {/* mobile sidebar - in mobile only */}
-      {/* <Drawer
-        opened={drawerOpened}
-        onClose={closeDrawer}
-        size="100%"
-        padding="md"
-        title="Navigation"
-        hiddenFrom="sm"
-        zIndex={1000000}
-      >
-        <ScrollArea h={`calc(100vh - ${rem(80)})`} mx="-md">
-          <Divider my="sm" />
+      {/* Mobile View Sidebar */}
+      <Sheet open={sheetOpen} onOpenChange={val => setSheetOpen(val)}>
+        <SheetTrigger
+          asChild
+          onClick={() => setSheetOpen(true)}
+          className="sm:hidden"
+        >
+          <div className="flex items-center cursor-pointer">
+            <Menu strokeWidth={1.75} />
+          </div>
+        </SheetTrigger>
+        <SheetContent
+          side="top"
+          className="flex flex-col gap-2 w-full sm:hidden outline-none rounded-b-xl"
+        >
+          {session ? (
+            <ProfileHeader
+              id={session.user.id}
+              name={session.user.name}
+              image={session.user.image}
+              onclick={closesheetAndModes}
+            />
+          ) : null}
 
-          <a href="/" className={classes.link}>
-            Home
-          </a>
-          <UnstyledButton className={classes.link} onClick={toggleLinks}>
-            <Center inline>
-              <Box component="span" mr={5}>
-                Features
-              </Box>
-              <TbChevronDown
-                style={{ width: rem(16), height: rem(16) }}
-                color={theme.colors.blue[6]}
-              />
-            </Center>
-          </UnstyledButton>
-          <Collapse in={linksOpened}>{links}</Collapse>
-          <a href="#" className={classes.link}>
-            Learn
-          </a>
-          <a href="#" className={classes.link}>
-            Academy
-          </a>
+          {/* Home Navlink */}
+          <SidebarLink
+            link="/"
+            label="Home"
+            currentPath={pathname === '/'}
+            onclick={closesheetAndModes}
+          />
 
-          <Divider my="sm" />
+          {/* About Navlink */}
+          <SidebarLink
+            link="/about"
+            label="About"
+            currentPath={pathname === '/about'}
+            onclick={closesheetAndModes}
+          />
 
-          <Group justify="center" grow pb="xl" px="md">
-            <Button
-              component={Link}
-              variant="default"
-              href="/auth/signin"
-              onClick={closeDrawer}
+          {/* Modes Dropdown Menu */}
+          <div
+            className={cn('flex flex-col text-primary text-sm rounded gap-2')}
+          >
+            <div
+              className="group flex gap-3 hover:bg-secondary py-2 pl-3 cursor-pointer select-none"
+              onClick={() => setModesOpen(prev => !prev)}
             >
-              Sign in
-            </Button>
-            <Button component={Link} href="/auth/signup" onClick={closeDrawer}>
-              Sign up
-            </Button>
-          </Group>
-        </ScrollArea>
-      </Drawer> */}
-    </div>
+              <div className="relative h-5 w-5">
+                <LayoutList className="absolute h-4 w-4 top-[1.2px]" />
+              </div>
+              <div
+                className={cn('flex gap-2 opacity-70 group-hover:opacity-100', {
+                  'opacity-100':
+                    pathname === '/single' || pathname === '/multiplayer',
+                })}
+              >
+                Modes
+                <span className="flex items-center">
+                  <ChevronRight
+                    className={cn(
+                      `h-3.5 w-3.5 ${modesOpen ? 'rotate-90' : 'rotate-0'}`
+                    )}
+                  />
+                </span>
+              </div>
+            </div>
+            <div
+              className={cn(
+                `flex-col ml-7 gap-2 ${modesOpen ? 'flex' : 'hidden'}`
+              )}
+            >
+              <SidebarLink
+                link="/single"
+                label="Single"
+                currentPath={pathname === '/single'}
+                onclick={handleSheetClose}
+              />
+              <SidebarLink
+                link="/multiplayer"
+                label="Multiplayer"
+                currentPath={pathname === '/multiplayer'}
+                onclick={handleSheetClose}
+              />
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
+    </header>
   );
 };

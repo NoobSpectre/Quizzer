@@ -15,3 +15,7 @@ export const preparedFindUserByEmail = db.query.users
     where: eq(schema.users.email, sql.placeholder('email')),
   })
   .prepare();
+
+export const preparedFindUserById = db.query.users.findFirst({
+  where: eq(schema.users.id, sql.placeholder('id'))
+}).prepare();

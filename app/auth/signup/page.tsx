@@ -5,8 +5,7 @@ import {
   FormButton,
   HomeButton,
 } from '@/components/customButtons';
-import { FormInput, FormNavigation, FormSeparator } from '@/components/form';
-import { FormHeader } from '@/components/headers';
+import { FormHeader, FormInput, FormNavigation, FormSeparator } from '@/components/form';
 import { userSignUpSchema } from '@/lib/models/schema';
 import { UserSignUpSchema } from '@/lib/models/types';
 import { submitForm } from '@/lib/utils';

@@ -1,5 +1,6 @@
+import { FormHeader } from './FormHeader';
 import { FormInput } from './FormInput';
 import { FormNavigation } from './FormNavigation';
 import { FormSeparator } from './FormSeparator';
 
-export { FormInput, FormNavigation, FormSeparator };
+export { FormHeader, FormInput, FormNavigation, FormSeparator };

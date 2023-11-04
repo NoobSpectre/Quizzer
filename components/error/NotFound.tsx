@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import { Button } from '../ui';
 
 export const NotFound = () => {
   return (
@@ -13,26 +14,15 @@ export const NotFound = () => {
         />
       </section>
       <section className="relative grid gap-10">
-        <p className="text-center font-black text-5xl">
-          Oops! Page Not Found
-        </p>
-        <div className='flex justify-center'>
-          {/* <Button
-            component={Link}
-            href="/"
-            size="md"
-            className="hover:shadow-2xl"
-            variant="gradient"
-            gradient={{ from: '#E50000', to: '#210080', deg: 90 }}
-            styles={{
-              root: {
-                boxShadow:
-                  '0 20px 25px -5px rgb(0 0 0 / 0.5), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
-              },
-            }}
+        <p className="text-center font-black text-5xl">Oops! Page Not Found</p>
+        <div className="flex justify-center">
+          <Button
+            size="sm"
+            className="bg-gradient-to-r from-gradient-red to-gradient-blue shadow-lg hover:shadow-2xl"
+            asChild
           >
-            Go back to home page
-          </Button> */}
+            <Link href="/">Go back to home page</Link>
+          </Button>
         </div>
       </section>
     </>
