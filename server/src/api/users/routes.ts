@@ -11,13 +11,13 @@ router
     validateRequest({ body: userSchema }),
     (
       req: Request<{}, UserWithId, User>,
-      res: Response<SuccessResponseWithData<User>>
+      res: Response<SuccessResponseWithData<User[]>>
     ) => {
       const data = req.body;
       res.status(200).json({
         success: true,
         message: "Successfully retrieved all users!",
-        data,
+        data: [data],
       });
     }
   );
