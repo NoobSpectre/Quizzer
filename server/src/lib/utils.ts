@@ -1,4 +1,4 @@
-import { isBefore, isValid, subYears } from "date-fns";
+import { addYears, isAfter, isWithinInterval, subYears } from "date-fns";
 import { NextFunction, Response } from "express";
 import { ZodError } from "zod";
 
@@ -14,15 +14,22 @@ export const handleError = (
   next(error);
 };
 
-export const verifyDob = (date: string, ageLimit: number) => {
-  if (!isValid(date)) return false;
+export const verifyDob = (age: number, dob?: string) => {
+  if (dob === undefined) return false;
 
-  const ageLimitYearsAgo = subYears(new Date(), ageLimit);
+  const dateAfterDob = addYears(new Date(dob), age);
 
-  const dob = new Date(date);
+  console.log(dateAfterDob);
 
-  return (
-    isBefore(dob, ageLimitYearsAgo) ||
-    dob.getTime() === ageLimitYearsAgo.getTime()
-  );
+  if (isAfter(dateAfterDob, new Date())) return false;
+
+  if (
+    !isWithinInterval(dateAfterDob, {
+      end: new Date(),
+      start: subYears(new Date(), 1),
+    })
+  )
+    return false;
+
+  return true;
 };
