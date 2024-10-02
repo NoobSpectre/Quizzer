@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import { addYears, isAfter, isWithinInterval, subYears } from "date-fns";
 import { NextFunction, Response } from "express";
 import { ZodError } from "zod";
@@ -12,6 +13,15 @@ export const handleError = (
     res.status(statusCode);
   }
   next(error);
+};
+
+export const encryptPassword = async (password: string, saltRounds = 10) => {
+  try {
+    const hash = await bcrypt.hash(password, saltRounds);
+    return { hash, error: null };
+  } catch (error) {
+    return { hash: null, error: "Error while hashing password!" };
+  }
 };
 
 export const verifyDob = (age: number, dob?: string) => {
