@@ -23,7 +23,6 @@ export type MessageResponse = {
 
 export type ErrorResponse = MessageResponse & {
   success: false;
-  data: null;
 };
 
 export type SuccessResponse<
