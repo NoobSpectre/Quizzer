@@ -1,8 +1,11 @@
 import { AnyZodObject, ZodEffects } from "zod";
-import { User, UserWithId } from "./api/users";
+import { User, UserWithId } from "./api/users/model";
 
-type WithArray<T> = T extends Array<infer U> ? U : T;
-type WithoutSensitive<T, SensitiveKeys extends keyof WithArray<T> = never> = {
+export type WithArray<T> = T extends Array<infer U> ? U : T;
+export type WithoutSensitive<
+  T,
+  SensitiveKeys extends keyof WithArray<T> = never,
+> = {
   [key in keyof WithArray<T> as key extends SensitiveKeys
     ? never
     : key]: WithArray<T>[key];
@@ -24,12 +27,15 @@ export type ErrorResponse = MessageResponse & {
 };
 
 export type SuccessResponse<
-  T,
+  T = never,
   SensitiveKeys extends keyof WithArray<T> = never,
-> = MessageResponse & {
-  success: true;
-  data: WithoutSensitive<T, SensitiveKeys>;
-};
+> = MessageResponse &
+  ([T] extends [never]
+    ? { success: true }
+    : {
+        success: true;
+        data: WithoutSensitive<T, SensitiveKeys>;
+      });
 
 export type SuccessResponseWithUser = SuccessResponse<User, "password">;
 export type SuccessResponseWithUserId = SuccessResponse<UserWithId, "password">;
