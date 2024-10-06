@@ -1,4 +1,4 @@
-import { ThemeToggle } from "@/components/custom-ui";
+import { ThemeToggle } from "@/components/custom";
 import {
   CircleHelpIcon,
   HomeIcon,
@@ -19,7 +19,7 @@ const NAV_LINKS = [
     label: "Room",
     Icon: PlusIcon,
     path: "/room",
-    isProtected: false,
+    isProtected: true,
   },
   {
     label: "About",
@@ -46,8 +46,10 @@ export function Header() {
             <Link
               key={label}
               to={path}
+              // activeProps={{ className: "relative after:absolute after:inset-x-1.5 after:bottom-1 after:h-0.5 after:bg-primary" }}
+              activeProps={{ className: "bg-background" }}
               className={cn(
-                "bg-background rounded px-3 py-2 flex items-center gap-2 text-xs font-medium",
+                "hover:bg-background focus-visible:border-0 focus-visible:outline-0 focus-visible:bg-background rounded p-2 flex items-center gap-1.5 text-xs font-medium",
                 { hidden: isProtected }
               )}
             >
@@ -59,6 +61,8 @@ export function Header() {
 
         <div className="flex items-center">
           <ThemeToggle />
+
+          {/* auth buttons */}
         </div>
       </div>
     </header>
