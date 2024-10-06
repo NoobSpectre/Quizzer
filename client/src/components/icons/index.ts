@@ -1,1 +1,2 @@
-export { CircleHelpIcon, HomeIcon, InfoIcon, PlusIcon } from "lucide-react";
+export { CircleHelpIcon, InfoIcon, PlusIcon, TrophyIcon } from "lucide-react";
+
