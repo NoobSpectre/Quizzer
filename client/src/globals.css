@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  #root {
+    @apply min-h-svh flex flex-col;
+  }
+}
+
+@layer utilities {
+  .wrapper {
+    width: min(calc(100% - var(--distance-sides)), var(--max-width-wrapper));
+    margin: 0 auto;
+  }
+}
