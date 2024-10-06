@@ -1,10 +1,12 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import { createRoot } from "react-dom/client";
+import { MainProvider } from "./providers";
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
+// Supports weights 100-900
+import "@fontsource-variable/noto-serif/wdth-italic.css";
+import "@fontsource-variable/noto-serif/wdth.css";
+
+// main css
+import "./globals.css";
+
+
+createRoot(document.getElementById("root")!).render(<MainProvider />);
